@@ -21,6 +21,7 @@ import { useGlobalSelector } from '../react-redux';
 import { BRAND_COLOR } from '../styles/constants';
 import ZulipText from '../common/ZulipText';
 import WebLink from '../common/WebLink';
+import { ENTERPRISE_CONFIG } from '../config/enterprise';
 
 type Props = $ReadOnly<{|
   navigation: AppNavigationProp<'realm-input'>,
@@ -58,18 +59,27 @@ type MaybeParsedInput =
 const tryParseInput = (realmInputValue: string): MaybeParsedInput => {
   const trimmedInputValue = realmInputValue.trim();
 
+  // 留空即代表登入關貿企業總部
   if (trimmedInputValue.length === 0) {
-    return { valid: false, error: ValidationError.Empty };
+    const defaultUrl = tryParseUrl(ENTERPRISE_CONFIG.hqServerUrl);
+    if (!defaultUrl) {
+      return { valid: false, error: ValidationError.InvalidUrl };
+    }
+    return { valid: true, value: defaultUrl };
+  }
+
+  // 智慧識別：若輸入簡短代碼（不含點與斜線，如 t-ex-core），自動拼裝成專案子網域
+  if (!trimmedInputValue.includes('.') && !trimmedInputValue.includes('/')) {
+    const projectUrl = tryParseUrl(`https://${trimmedInputValue}.${ENTERPRISE_CONFIG.baseDomain}`);
+    if (!projectUrl) {
+      return { valid: false, error: ValidationError.InvalidUrl };
+    }
+    return { valid: true, value: projectUrl };
   }
 
   let url = tryParseUrl(trimmedInputValue);
   if (!/^https?:\/\//.test(trimmedInputValue)) {
     if (url && url.protocol === 'zulip:') {
-      // Someone might get the idea to try one of the "zulip://" URLs that
-      // are discussed sometimes.
-      // TODO(?): Log to Sentry. How much does this happen, if at all? Maybe
-      //   log once when the input enters this error state, but don't spam
-      //   on every keystroke/render while it's in it.
       return { valid: false, error: ValidationError.UnsupportedSchemeZulip };
     } else if (url && url.protocol !== 'http:' && url.protocol !== 'https:') {
       return { valid: false, error: ValidationError.UnsupportedSchemeOther };
@@ -92,43 +102,34 @@ type Suggestion =
   | string // Suggest this string as the server URL
   | null; // No suggestion
 
-function getSuggestion(realmInputValue, maybeParsedInput): Suggestion {
+function getSuggestion(realmInputValue: string, maybeParsedInput: MaybeParsedInput): Suggestion {
+  const trimmed = realmInputValue.trim();
+
+  if (trimmed.length === 0) {
+    return '🏢 目標：關貿網路 企業總部';
+  }
+
   if (!maybeParsedInput.valid) {
     switch (maybeParsedInput.error) {
       case ValidationError.NoUseEmail:
       case ValidationError.UnsupportedSchemeZulip:
       case ValidationError.UnsupportedSchemeOther:
-        // Flag high-signal errors
         return maybeParsedInput.error;
-
       case ValidationError.Empty:
       case ValidationError.InvalidUrl:
-      // Don't flag more noisy errors, which will often happen when the user
-      // just hasn't finished typing a good URL. They'll still show up if
-      // they apply at submit time; see the submit handler.
+        return null;
     }
   }
 
-  const normalizedValue = realmInputValue.trim().replace(/^https?:\/\//, '');
-
-  if (
-    // This couldn't be a valid Zulip Cloud server subdomain. (Criteria
-    // copied from check_subdomain_available in zerver/forms.py.)
-    normalizedValue.length < 3
-    || !/^[a-z0-9-]*$/.test(normalizedValue)
-    || normalizedValue[0] === '-'
-    || normalizedValue[normalizedValue.length - 1] === '-'
-    // TODO(?): Catch strings hard-coded as off-limits, like "your-org".
-    //   (See check_subdomain_available in zerver/forms.py.)
-  ) {
-    return null;
+  if (!trimmed.includes('.') && !trimmed.includes('/')) {
+    const knownName = ENTERPRISE_CONFIG.knownProjects[trimmed.toLowerCase()];
+    if (knownName) {
+      return `🚄 目標：${knownName} (${trimmed})`;
+    }
+    return `📁 目標專案：${trimmed}.${ENTERPRISE_CONFIG.baseDomain}`;
   }
 
-  if ('chat'.startsWith(normalizedValue)) {
-    return 'https://chat.zulip.org/';
-  }
-
-  return `https://${normalizedValue}.zulipchat.com/`;
+  return `🌐 目標伺服器：${trimmed}`;
 }
 
 export default function RealmInputScreen(props: Props): Node {
@@ -140,7 +141,7 @@ export default function RealmInputScreen(props: Props): Node {
   const themeContext = React.useContext(ThemeContext);
 
   const [progress, setProgress] = React.useState(false);
-  const [realmInputValue, setRealmInputValue] = React.useState('https://david-poc-zulip.ccwu.cc');
+  const [realmInputValue, setRealmInputValue] = React.useState('');
   const maybeParsedInput = tryParseInput(realmInputValue);
 
   const textInputRef = React.useRef<React$ElementRef<typeof TextInput> | null>(null);
@@ -210,7 +211,7 @@ export default function RealmInputScreen(props: Props): Node {
           fontSize: 20,
           color: themeContext.color,
         },
-        suggestionText: { fontSize: 12, fontStyle: 'italic' },
+        suggestionText: { fontSize: 13, marginTop: 4, marginBottom: 8 },
         suggestionTextLink: {
           fontStyle: 'normal',
           color: BRAND_COLOR, // chosen to mimic WebLink
@@ -222,43 +223,23 @@ export default function RealmInputScreen(props: Props): Node {
 
   const suggestionContent = React.useMemo(() => {
     if (suggestion === null) {
-      // Vertical spacer so the layout doesn't jump when a suggestion
-      // appears or disappears. (The empty string might be neater, but it
-      // doesn't give the right height… probably lots of people wanted it to
-      // be treated just like false/null/undefined in conditional rendering,
-      // and React or RN gave in to that. I've tried the obvious ways to use
-      // RN's PixelRatio.getFontScale() and never got the right height
-      // either; dunno why.)
       return '\u200b'; // U+200B ZERO WIDTH SPACE
     } else if (typeof suggestion === 'string') {
       return (
-        <ZulipTextIntl
-          inheritFontSize
-          text={{
-            text: 'Suggestion: <z-link>{suggestedServerUrl}</z-link>',
-            values: {
-              suggestedServerUrl: suggestion,
-              'z-link': chunks => (
-                <ZulipText
-                  inheritFontSize
-                  style={styles.suggestionTextLink}
-                  onPress={() => handlePressSuggestion(suggestion)}
-                >
-                  {chunks}
-                </ZulipText>
-              ),
-            },
-          }}
-        />
+        <ZulipText inheritFontSize style={{ color: BRAND_COLOR, fontWeight: '500' }}>
+          {suggestion}
+        </ZulipText>
       );
     } else {
       return <ZulipTextIntl inheritFontSize text={validationErrorMsg(suggestion)} />;
     }
-  }, [suggestion, handlePressSuggestion, styles]);
+  }, [suggestion]);
+
+  const isHQ = realmInputValue.trim() === '';
 
   return (
     <Screen
-      title="Welcome"
+      title={ENTERPRISE_CONFIG.appName}
       canGoBack={!route.params.initial}
       padding
       centerContent
@@ -267,20 +248,13 @@ export default function RealmInputScreen(props: Props): Node {
     >
       <ZulipTextIntl
         text={{
-          text: 'Enter your Zulip server URL: <z-link>(What’s this?)</z-link>',
-          values: {
-            'z-link': chunks => (
-              <WebLink url={new URL('https://zulip.com/help/logging-in#find-the-zulip-log-in-url')}>
-                {chunks}
-              </WebLink>
-            ),
-          },
+          text: '請輸入專案空間代碼（留空直接登入關貿總部）：',
         }}
       />
       <View style={styles.inputWrapper}>
         <TextInput
           value={realmInputValue}
-          placeholder="your-org.zulipchat.com"
+          placeholder="例如: t-ex-core（留空進入總部）"
           placeholderTextColor={HALF_COLOR}
           style={styles.input}
           autoFocus
@@ -289,10 +263,10 @@ export default function RealmInputScreen(props: Props): Node {
           returnKeyType="go"
           onChangeText={setRealmInputValue}
           blurOnSubmit={false}
-          keyboardType="url"
+          keyboardType="default"
           underlineColorAndroid="transparent"
           onSubmitEditing={tryRealm}
-          enablesReturnKeyAutomatically
+          enablesReturnKeyAutomatically={false}
           disableFullscreenUI
           ref={textInputRef}
         />
@@ -300,7 +274,7 @@ export default function RealmInputScreen(props: Props): Node {
       <ZulipText style={styles.suggestionText}>{suggestionContent}</ZulipText>
       <ZulipButton
         style={styles.button}
-        text="Enter"
+        text={isHQ ? '進入關貿總部' : '進入專案空間'}
         progress={progress}
         onPress={tryRealm}
         isPressHandledWhenDisabled
