@@ -1,0 +1,11 @@
+Tradevan Corporate Mobile Communication App (關貿通訊)
+Based on Zulip Mobile (https://github.com/zulip/zulip-mobile)
+Copyright (c) Kandra Labs, Inc. and contributors.
+Licensed under the Apache License, Version 2.0 (the "License").
+
+Prominent Modification Notice (Apache 2.0 Section 4b):
+This project contains modifications developed for Trade-Van Information Services Co., Ltd. (關貿網路股份有限公司) corporate communication PoC:
+1. Rebranded with Tradevan corporate branding, visual identity, and custom launcher icons.
+2. Configured customized application identifier (`com.example.davidpoczulip`).
+3. Customized default server URL targeting company enterprise instances.
+4. Integrated dedicated Firebase Cloud Messaging (FCM) credentials for autonomous push notification delivery.

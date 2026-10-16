@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668739935721",
+    "project_id": "david-poc-zulip",
+    "storage_bucket": "david-poc-zulip.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668739935721:android:3ab101e7105c65688dff78",
+        "android_client_info": {
+          "package_name": "com.example.davidpoczulip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDves-XsebnN3NERR1uZ0WOy-HZONM_gBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

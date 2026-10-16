@@ -144,7 +144,7 @@ rnProperties.load(new FileInputStream(file("../../node_modules/react-native/Reac
 
 android {
     defaultConfig {
-        applicationId "com.zulipmobile"
+        applicationId "com.example.davidpoczulip"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 235
@@ -181,7 +181,7 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            // applicationIdSuffix ".debug"
         }
         release {
             minifyEnabled enableProguardInReleaseBuilds

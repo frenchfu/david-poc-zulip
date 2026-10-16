@@ -140,7 +140,7 @@ export default function RealmInputScreen(props: Props): Node {
   const themeContext = React.useContext(ThemeContext);
 
   const [progress, setProgress] = React.useState(false);
-  const [realmInputValue, setRealmInputValue] = React.useState('');
+  const [realmInputValue, setRealmInputValue] = React.useState('https://david-poc-zulip.ccwu.cc');
   const maybeParsedInput = tryParseInput(realmInputValue);
 
   const textInputRef = React.useRef<React$ElementRef<typeof TextInput> | null>(null);
