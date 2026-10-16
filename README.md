@@ -1,18 +1,29 @@
-# Zulip Mobile (legacy, unsupported)
+# 關貿通訊 (Tradevan Chat Mobile)
 
-This codebase built on React Native is an **unsuppported legacy app**.
-On 2025-06-07, we launched a [new Zulip mobile app with Flutter][zulip-flutter].
+本專案為 **關貿網路股份有限公司 (Trade-Van Information Services Co., Ltd.)** 企業行動通訊 PoC 之專屬行動端 App。  
+基於開源專案 [Zulip Mobile](https://github.com/zulip/zulip-mobile) 進行深度客製化與功能擴充。
 
-This repository will be archived soon;
-see https://github.com/zulip/zulip-mobile/issues/5931.
-If you're interested in contributing to Zulip's mobile apps,
-see [zulip-flutter][zulip-flutter].
+---
 
-Details below are from when this app was in active development.
-Some details may still be useful, but **bear in mind that this
-legacy app is unsupported** as described above.
+## 📜 開源授權與修改聲明 (Apache License 2.0 Compliance)
 
-[zulip-flutter]: https://github.com/zulip/zulip-flutter
+* 本專案依循 **Apache License, Version 2.0** 規範發布，完整授權條款請參閱本目錄下之 [LICENSE](LICENSE) 文件。
+* **依據 Apache 2.0 第 4(b) 條之顯著修改聲明 (Prominent Modification Notice)**：
+  1. **品牌視覺與識別替換**：導入 Trade-van 專屬企業視覺識別、應用程式名稱（關貿通訊）與專屬桌布 Launcher 圖標。
+  2. **套件識別碼客製**：設定 Android 專屬 Application ID (`com.example.davidpoczulip`)。
+  3. **伺服器連線優化**：預填公司企業伺服器位址，並完整保留多專案/多組織（Multi-Realm）自由切換機制。
+  4. **自主推播引擎整合**：整合自主託管之 Firebase Cloud Messaging (FCM) 服務金鑰與推播架構。
+* **商標與歸屬免責聲明**：
+  * Zulip 為 Kandra Labs, Inc. 之註冊商標。
+  * 本專案為關貿網路獨立客製之衍生版本，未受 Kandra Labs, Inc. 贊助或官方背書。
+  * 詳細修改與法律聲明請參閱 [NOTICE.txt](NOTICE.txt)。
+
+---
+
+## 原廠專案資訊 (Upstream Project)
+
+Zulip Mobile (legacy codebase built on React Native).
+
 
 
 ### Discussion
