@@ -4,4 +4,5 @@
     <color name="primaryColorDark">#d7ccc8</color>
     <!--  This should agree with `BRAND_COLOR` in the JS code.  -->
     <color name="brandColor">#6492fe</color>
+    <color name="ic_launcher_background">#172347</color>
 </resources>
