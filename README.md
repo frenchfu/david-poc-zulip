@@ -20,6 +20,12 @@
 
 ---
 
+## 🛠️ 開發、打包與憑證維運文件
+
+* **[Firebase 憑證替換與 App 打包作業指南](FIREBASE_REPLACEMENT_AND_PACKAGING_GUIDE.md)**：包含公司未來切換專屬 Firebase 專案、替換 `google-services.json`、伺服器端金鑰替換以及 APK 打包之完整 SOP。
+
+---
+
 ## 原廠專案資訊 (Upstream Project)
 
 Zulip Mobile (legacy codebase built on React Native).
