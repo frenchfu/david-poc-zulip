@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.zulip.flutter"
+    namespace = "com.zulip.flutter.shim"
 
     // This Gradle project holds only ZulipShimPlugin, which forwards to the
     // app's ZulipPlugin. For why, see this package's pubspec.yaml.

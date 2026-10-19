@@ -15,7 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 const kFirebaseOptionsAndroid = FirebaseOptions(
   // This `appId` and `messagingSenderId` are the same as in zulip-mobile;
   // see zulip-mobile:android/app/src/main/res/values/firebase.xml .
-  appId: '1:${_ZulipFirebaseOptions.projectNumber}:android:6ae61ae43a7c3410',
+  appId: '1:668739935721:android:3ab101e7105c65688dff78',
   messagingSenderId: _ZulipFirebaseOptions.projectNumber,
   projectId: _ZulipFirebaseOptions.projectId,
   apiKey: _ZulipFirebaseOptions.firebaseApiKey,
@@ -36,17 +36,17 @@ const kFirebaseOptionsAndroid = FirebaseOptions(
 ///
 /// TODO: Cut out Firebase for APNs and use a thinner platform-API binding.
 const kFirebaseOptionsIos = FirebaseOptions(
-  appId: '1:${_ZulipFirebaseOptions.projectNumber}:ios:9cad34899ca57ba6',
+  appId: '1:668739935721:ios:3604f3bfd591b24df41f62',
   messagingSenderId: _ZulipFirebaseOptions.projectNumber,
   projectId: _ZulipFirebaseOptions.projectId,
   apiKey: _ZulipFirebaseOptions.firebaseApiKey,
 );
 
 abstract class _ZulipFirebaseOptions {
-  static const projectNumber = '835904834568';
+  static const projectNumber = '668739935721';
 
   // Despite its value, this name applies across Android and iOS.
-  static const projectId = 'zulip-android';
+  static const projectId = 'david-poc-zulip';
 
   // Despite the name, this Google Cloud "API key" is a very different kind
   // of thing from a Zulip "API key".  In particular, it's designed to be
@@ -62,5 +62,5 @@ abstract class _ZulipFirebaseOptions {
   //
   // TODO: Perhaps use a different key in published builds; still fundamentally
   //   public, but would avoid accidental reuse in dev or modified builds.
-  static const firebaseApiKey = 'AIzaSyC6kw5sqCYjxQl2Lbd_8MDmc1lu2EG0pY4';
+  static const firebaseApiKey = 'AIzaSyDves-XsebnN3NERR1uZ0WOy-HZONM_gBg';
 }

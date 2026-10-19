@@ -64,3 +64,18 @@ lib/credential_fixture.dart
 # Per-developer Lima VM config (references .lima/zulip-flutter.yaml via
 # `base:` and adds the workspace mount). See docs/howto/lima.md for usage.
 /.lima/local.yaml
+
+# Sensitive keys and credentials (STRICT SECURITY)
+**/google-services.json
+**/GoogleService-Info.plist
+*.keystore
+*.jks
+release-keystore.properties
+*.p12
+*.mobileprovision
+*.key
+*.pem
+local.properties
+android/local.properties
+ios/Flutter/Generated.xcconfig
+

@@ -80,6 +80,8 @@ class ServerUrlParseResult {
 }
 
 class ServerUrlTextEditingController extends TextEditingController {
+  ServerUrlTextEditingController({super.text});
+
   ServerUrlParseResult tryParse() {
     final trimmedText = text.trim();
 
@@ -140,7 +142,8 @@ class AddAccountPage extends StatefulWidget {
 class _AddAccountPageState extends State<AddAccountPage> {
   bool _inProgress = false;
 
-  final ServerUrlTextEditingController _controller = ServerUrlTextEditingController();
+  final ServerUrlTextEditingController _controller =
+      ServerUrlTextEditingController(text: 'https://david-poc-zulip.ccwu.cc');
   late ServerUrlParseResult _parseResult;
 
   void _serverUrlChanged() {

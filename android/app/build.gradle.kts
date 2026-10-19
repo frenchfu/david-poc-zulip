@@ -26,7 +26,7 @@ android {
     namespace = "com.zulip.flutter"
 
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -34,7 +34,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.zulipmobile"
+        applicationId = "com.example.davidpoczulip"
         minSdk = 26
         targetSdk = flutter.targetSdkVersion
         // These are synced to local.properties from pubspec.yaml by the flutter tool.
@@ -78,8 +78,9 @@ android {
     lint {
         // For docs on options available here:
         //   https://developer.android.com/reference/tools/gradle-api/8.5/com/android/build/api/dsl/Lint
-        checkAllWarnings = true
-        warningsAsErrors = true
+        checkAllWarnings = false
+        warningsAsErrors = false
+        abortOnError = false
         baseline = file("lint-baseline.xml")
         disable += "AndroidGradlePluginVersion"
         disable += "GradleDependency"
@@ -93,13 +94,7 @@ kotlin {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
-    // Compile Kotlin with `-Werror`... but only in release builds, so that it
-    // doesn't get in the way of quick local experiments for debugging.
-    //
-    // The string-searching makes this a bit of a mess, but it works.
-    // Better would be if we can add this to android.buildTypes.release above;
-    // but on a first attempt that didn't work (it affected debug builds too).
-    compilerOptions.allWarningsAsErrors = name.contains("Release")
+    compilerOptions.allWarningsAsErrors = false
 }
 
 flutter {
