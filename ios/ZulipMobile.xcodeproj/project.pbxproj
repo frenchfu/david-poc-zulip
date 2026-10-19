@@ -406,7 +406,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = org.zulip.Zulip;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tradevan.poc-zulip.chat";
 				PRODUCT_NAME = ZulipMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZulipMobile-Bridging-Header.h";
@@ -439,7 +439,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = org.zulip.Zulip;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tradevan.poc-zulip.chat";
 				PRODUCT_NAME = ZulipMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZulipMobile-Bridging-Header.h";
@@ -512,7 +512,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.zulip.ZulipMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tradevan.poc-zulip.chat";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -572,7 +572,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.zulip.ZulipMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tradevan.poc-zulip.chat";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

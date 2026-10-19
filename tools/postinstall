@@ -44,6 +44,14 @@ patch_package
 
 build_rn_packages
 
+# Fix React Native podspecs for modern Ruby and Boost archive
+if [ -f "node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb" ]; then
+    sed -i '' "s/ERB.new(template, 0, '->')/ERB.new(template, trim_mode: '->')/g" "node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb" 2>/dev/null || true
+fi
+if [ -f "node_modules/react-native/third-party-podspecs/boost.podspec" ]; then
+    sed -i '' "s|https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2|https://archives.boost.io/release/1.76.0/source/boost_1_76_0.tar.bz2|g" "node_modules/react-native/third-party-podspecs/boost.podspec" 2>/dev/null || true
+fi
+
 pod_install
 
 jetify
