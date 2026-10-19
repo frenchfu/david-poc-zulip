@@ -52,10 +52,19 @@ export PATH="$HOME/flutter/bin:$ANDROID_HOME/platform-tools:$PATH"
 2. **App 顯示名稱**：
    - Android (`android/app/src/main/AndroidManifest.xml`)：`android:label="關貿通訊"`
    - iOS (`ios/Runner/Info.plist`)：`CFBundleDisplayName` 與 `CFBundleName` 設為 `關貿通訊`
-3. **企業圖示（App Icons）**：
+3. **應用程式識別碼（Bundle ID / Application ID）規範**：
+   - **Android Application ID**：
+     - 現行 PoC 設定：`com.example.davidpoczulip`（檔案：`android/app/build.gradle.kts` 的 `applicationId`）。
+     - **配對原則**：此 ID 必須與 `google-services.json` 內的 `package_name` 完全一致，否則 Firebase FCM 推播將無法註冊。
+     - 正式環境變更：若改為關貿企業 ID（例如：`com.tradevan.chat`），請同步更換相應的 `google-services.json`。
+   - **iOS Bundle Identifier**：
+     - 建議值：`com.tradevan.poc-zulip.chat`（或正式環境 `com.tradevan.chat`）。
+     - 設定位置：Xcode 中 `Runner.xcodeproj` 的 `PRODUCT_BUNDLE_IDENTIFIER`，或直接搜尋取代 `org.zulip.Zulip`。
+     - **配對原則**：必須與公司 Apple Developer Portal 上建立的 App ID 相同，以利 Xcode 簽章或 TestFlight 部署。
+4. **企業圖示（App Icons）**：
    - Android：`android/app/src/main/res/mipmap-*` 內嵌關貿深藍底色（`#172347`）高解析向量圖示
    - iOS：`ios/Runner/Assets.xcassets/AppIcon.appiconset` 內嵌全尺寸關貿官方圖示（20x20 至 1024x1024）
-4. **AGP 9 與 Kotlin 相容性修正（核心關鍵）**：
+5. **AGP 9 與 Kotlin 相容性修正（核心關鍵）**：
    - `packages/zulip_plugin/android/build.gradle.kts`：命名空間獨立設為 `com.zulip.flutter.shim`，解決 AGP 9 禁止命名空間重複的限制。
    - `android/app/build.gradle.kts`：設置 `ndkVersion = "28.2.13676358"`，避免多架構加密庫版號不相容。
 
