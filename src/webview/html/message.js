@@ -292,9 +292,8 @@ $!${divOpenHtml}
   );
   const avatarUrl = message.avatar_url
     .get(
-      // 48 logical pixels; see `.avatar` and `.avatar img` in
-      // src/webview/static/base.css.
-      PixelRatio.getPixelSizeForLayoutSize(48),
+      // 38 logical pixels to match web app style
+      PixelRatio.getPixelSizeForLayoutSize(38),
     )
     .toString();
   const subheaderHtml = template`\
@@ -316,8 +315,8 @@ $!${divOpenHtml}
 
   return template`\
 $!${divOpenHtml}
-  <div class="avatar">
-    <img src="${avatarUrl}" alt="${senderFullName}" class="avatar-img" data-sender-id="${sender_id}">
+  <div class="avatar" style="width: 38px; height: 38px; min-width: 38px; margin-right: 12px;">
+    <img src="${avatarUrl}" alt="${senderFullName}" class="avatar-img" style="width: 38px; height: 38px; border-radius: 6px; object-fit: cover;" data-sender-id="${sender_id}">
   </div>
   <div class="content">
     $!${subheaderHtml}

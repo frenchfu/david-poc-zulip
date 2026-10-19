@@ -1,0 +1,806 @@
+/* @flow strict-local */
+// Auto-generated fallback for webview styling
+
+export default `
+/*
+ Top level.
+ */
+
+html {
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  -khtml-user-select: none;
+  -webkit-touch-callout: none;
+  font: -apple-system-body;
+}
+body {
+  font-family: sans-serif;
+  line-height: 1.4;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* TODO: make specific versions of this rule for where we actually use it.
+   That way, no surprises when some contrary rule has higher specificity.
+   (Until then, we avoid using this class for any element where we have
+   another rule specifying a \`display:\` attribute at all.) */
+.hidden {
+  display: none;
+}
+
+#js-error-detailed {
+  position: fixed;
+  width: 100%;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+}
+#js-error-plain, #js-error-plain-dummy {
+  z-index: 1000;
+  width: 100%;
+  background: red;
+  color: white;
+  padding: 4px;
+  text-align: center;
+}
+#js-error-plain {
+  position: fixed;
+}
+#js-error-plain-dummy {
+  visibility: hidden;
+}
+
+/*
+ Whole messages and their neighbors: timerows, recipient headers, etc.
+ */
+
+/* Timerows. */
+.timerow {
+  text-align: center;
+  color: hsl(0, 0%, 60%);
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+.timerow-left,
+.timerow-right {
+  flex: 1;
+  height: 1px;
+  margin: 8px;
+}
+.timerow-left {
+  background: -webkit-linear-gradient(left, transparent 10%, hsl(0, 0%, 60%) 100%);
+}
+.timerow-right {
+  background: -webkit-linear-gradient(left, hsl(0, 0%, 60%) 0%, transparent 90%);
+}
+
+/* Recipient headers. */
+.header-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+}
+.avatar,
+.header-wrapper,
+.message-brief {
+  cursor: pointer;
+}
+.stream-header {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+.stream-text,
+.topic-header,
+.private-header {
+  line-height: 2;
+  white-space: nowrap;
+}
+.private-header {
+  padding: 0 8px;
+}
+.private-header {
+  background: hsl(0, 0%, 27%);
+  color: white;
+}
+.topic-header {
+  background: hsl(0, 0%, 80%);
+  min-width: 30%;
+}
+.stream-text {
+  padding: 0 8px;
+}
+.topic-text {
+  flex: 1;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.topic-text[data-followed="true"]::after {
+  content: "";
+  background-image: url("images/follow.svg");
+  margin-left: 12px;
+  width: 17px;
+  height: 17px;
+  /* opacity: 0.2 on web, but that's with the pastel stream colors;
+   * 0.3 stands up better to our gray. */
+  opacity: 0.3;
+}
+.topic-date {
+  opacity: 0.5;
+  padding: 0 8px;
+  pointer-events: none;
+}
+
+/* Messages! And "loading" pseudomessages. */
+.message,
+.loading {
+  display: flex;
+  word-wrap: break-word;
+  /* This value is used for messageReadSlop in src/webview/js/js.js, if
+   * updating one, please update the other */
+  padding: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+.message-brief {
+  /* This value is used for messageReadSlop in src/webview/js/js.js, if
+   * updating one, please update the other */
+  padding: 0 16px 16px 66px;
+}
+
+.message-brief[data-mute-state="hidden"] {
+  display: none;
+}
+
+.message[data-mute-state="hidden"] > .avatar,
+.message[data-mute-state="hidden"] > .content {
+  display: none;
+}
+
+.message[data-mute-state="shown"] > .muted-message-explanation {
+  display: none;
+}
+
+#message-loading {
+  position: fixed;
+  width: 100%;
+  opacity: 0.25;
+}
+
+/* Spinners. */
+.loading-spinner, .outbox-spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 16px auto;
+  font-size: 10px;
+  border: 3px solid hsla(222, 99%, 69%, 0.25);
+  border-left: 3px solid hsla(222, 99%, 69%, 0.75);
+  animation: spin 1s linear infinite;
+}
+.outbox-spinner {
+  margin: -16px 0 0 0;
+  border-width: 2px;
+  width: 12px;
+  height: 12px;
+  float: right;
+}
+
+/* Typing-status indicators. */
+#typing {
+  display: flex;
+  padding-left: 16px;
+}
+#typing .content {
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+#typing span {
+  display: inline-block;
+  background-color: hsl(253, 3%, 72%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  margin-right: 5px;
+  animation: bob 2s infinite;
+}
+#typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+#typing span:nth-child(3) {
+  animation-delay: 0.3s;
+  margin-right: 0;
+}
+@keyframes bob {
+  10% {
+    transform: translateY(-10px);
+    background-color: hsl(253, 3%, 63%);
+  }
+  50% {
+    transform: translateY(0);
+    background-color: hsl(253, 3%, 72%);
+  }
+}
+
+/* The "scroll to bottom" button. */
+#scroll-bottom {
+  position: fixed;
+  z-index: 200;
+  right: 5px;
+  bottom: 15px;
+  border-radius: 50%;
+  transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
+}
+#scroll-bottom a {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: hsla(222, 99%, 69%, 0.5);
+  -webkit-tap-highlight-color: transparent;
+}
+#scroll-bottom .text {
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
+#scroll-bottom:active{
+  background-color: hsl(170, 48%, 54%);
+}
+#scroll-bottom svg {
+  width: 32px;
+  height: 32px;
+  fill: hsla(0, 0%, 100%, 0.75);
+}
+#scroll-bottom.hidden {
+  display: block; /* Remove this when the generic .hidden rule is removed */
+  opacity: 0;
+}
+
+/*
+ Inside a "loading" pseudomessage.
+ */
+
+.loading-avatar {
+  border-radius: 3px;
+  background: hsla(0, 0%, 50%, 0.9);
+}
+.loading-content {
+  width: 100%;
+}
+.loading-subheader {
+  display: flex;
+  justify-content: space-between;
+}
+.loading-content .block {
+  background: linear-gradient(
+    to right,
+    hsla(0, 0%, 50%, 0.5) 0%,
+    hsla(0, 0%, 50%, 0.5) 40%,
+    hsla(0, 0%, 50%, 0.25) 51%,
+    hsla(0, 0%, 50%, 0.5) 60%,
+    hsla(0, 0%, 50%, 0.5) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient-scroll 1s linear infinite;
+
+  border-radius: 10px;
+  height: 8px;
+  margin-bottom: 10px;
+}
+@keyframes gradient-scroll {
+  0% { background-position: 100% 50% }
+  100% { background-position: 0 50% }
+}
+.loading-subheader .name {
+  width: 10rem;
+  background-color: hsla(0, 0%, 50%, 0.9);
+}
+.loading-subheader .msg-timestamp {
+  width: 5rem;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/*
+ Inside a message, outside its contents.
+ */
+
+[data-mentioned="true"][data-mute-state="shown"],
+[data-wildcard_mentioned="true"][data-mute-state="shown"] {
+  background: hsla(0, 100%, 50%, 0.05);
+}
+.message:not([data-read="true"]) {
+  box-shadow: inset 4px 0 hsl(222, 99%, 69%);
+}
+.message[data-read="true"] {
+  box-shadow: inset 4px 0 transparent;
+  transition-property: box-shadow;
+  transition-duration: 0.3s;
+  transition-delay: 1s;
+  transition-timing-function: ease-out;
+}
+
+/*
+ * The sender's avatar. If changing the size here, be sure to change
+ * the size we request for the avatar image file in the corresponding
+ * HTML-generating code (see messageTypingAsHtml.js and
+ * message.js in src/webview/html/).
+ */
+.avatar,
+.loading-avatar {
+  min-width: 38px;
+  width: 38px;
+  height: 38px;
+  margin-right: 12px;
+}
+.avatar img {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* The "subheader" showing sender, emoji status, and timestamp. */
+.subheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.name-and-status-emoji {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.status-emoji {
+  height: 1.4rem;
+
+  /* Different from web, which has 2px. More is mysteriously needed here to
+     get the same effective spacing. */
+  margin-left: 4px;
+}
+.static-timestamp {
+  color: hsl(0, 0%, 60%);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Timestamp pills. */
+.time-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+.msg-timestamp {
+  position: absolute;
+  right: 4px;
+  transform: translateX(100%);
+  transition-property: right, transform;
+  transition-duration: 0.2s;
+  padding: 2px 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: hsl(0, 0%, 60%);
+  background: hsl(0, 0%, 97%);
+  border-radius: 3px;
+  box-shadow:
+      0px 3px 1px -2px hsla(0, 0%, 0%, 0.2),
+      0px 2px 2px  0px hsla(0, 0%, 0%, 0.14),
+      0px 1px 5px  0px hsla(0, 0%, 0%, 0.12);
+}
+.msg-timestamp.show {
+  right: 8px;
+  transform: none;
+}
+
+/* The message content! */
+.content {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Tags, like "starred" or "edited 2 minutes ago". */
+.message-tags {
+  text-align: right;
+  margin: 4px 0;
+  font-size: 0.7rem;
+}
+.message-tag {
+  padding: 4px 4px;
+  margin-left: 4px;
+  border-radius: 3px;
+  color: hsla(0, 0%, 50%, 0.75);
+  background: hsla(0, 0%, 0%, 0.1);
+}
+
+/* Emoji reactions. */
+.reaction-list {
+  margin: 8px 0;
+}
+.reaction {
+  color: hsl(0, 0%, 50%);
+  display: inline-block;
+  padding: 5px 6.5px;
+  border-radius: 3px;
+  border: 1px solid hsla(0, 0%, 50%, 0.75);
+  line-height: 1.2rem;
+
+  /* No max height. With \`displayEmojiReactionUsers: true\`, users' names may
+     wrap onto multiple lines. */
+  min-height: 1rem;
+
+  margin: 4px 8px 4px 0;
+}
+.reaction img {
+  pointer-events: none;
+  cursor: default;
+  max-height: 1rem;
+  max-width: 1rem;
+  vertical-align: top;
+}
+.self-voted {
+  color: hsl(222, 99%, 69%);
+  border: 1px solid hsl(222, 99%, 69%);
+  background: hsla(222, 99%, 69%, 0.1);
+}
+
+/*
+ Message contents.
+
+ For the body of a message, we use nearly the same HTML as the webapp does.
+ The styles therefore have a lot in common.  For the webapp's version of
+ these styles, compare static/styles/rendered_markdown.css .
+ */
+
+p {
+  margin: 0;
+}
+.message p + p {
+  margin-top: 16px;
+}
+.message ul {
+  padding-left: 20px;
+  margin: 4px 0 0 0;
+}
+.message ul + p {
+  margin-top: 16px;
+}
+
+blockquote {
+  padding-left: 8px;
+  margin: 8px 0 8px 0;
+  border-left: 3px solid hsla(0, 0%, 50%, 0.5);
+}
+
+table {
+  border-collapse: collapse;
+  max-width: fit-content;
+  display: block;
+  overflow-x: auto;
+}
+table, th, td {
+  border: 1px solid hsla(0, 0%, 50%, 0.25);
+}
+thead {
+  background: hsla(0, 0%, 50%, 0.1);
+}
+th, td {
+  align: center;
+  padding: 4px 8px;
+}
+
+.emoji {
+  display: inline-block;
+  height: 1.25rem;
+  width: 1.25rem;
+  white-space: nowrap;
+  color: transparent;
+  vertical-align: text-top;
+}
+.emoji:before {
+  color: white;
+}
+
+/* TODO differentiate these three kinds of mentions */
+/* TODO differentiate on .user-mention-me (whether mention includes self-user) */
+.topic-mention,
+.user-group-mention,
+.user-mention {
+  white-space: nowrap;
+  background-color: hsla(0, 0%, 0%, 0.1);
+  border-radius: 3px;
+  padding: 0 2px;
+  margin: 0 1px;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.2);
+}
+
+.alert-word {
+  background-color: hsla(102, 85%, 57%, 0.3);
+}
+
+time {
+  display: inline-block;
+  padding: 4px 6px;
+  background-color: hsla(0, 0%, 50%, 0.125);
+  border-radius: 8px;
+}
+
+.message_inline_image {
+  text-align: center;
+}
+.message_inline_image img,
+.message_inline_ref img,
+.twitter-image img {
+  width: 100%;
+  height: 160px;
+  object-fit: scale-down;
+}
+.message_inline_image img.image-loading-placeholder {
+  content: url("images/loader-black.svg");
+}
+
+.message_inline_video {
+  position: relative;
+}
+.message_inline_video video {
+  width: 240px;
+  height: 160px;
+  background: black;
+}
+.message_inline_video::after {
+  content: "";
+  background-image: url("images/play_button.svg");
+  display: block;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: calc(50% - 16px);
+  left: calc(50% - 16px);
+  border-radius: 100%;
+  transform: scale(0.8);
+}
+
+.twitter-tweet {
+  border: 2px solid hsla(203, 89%, 53%, 0.5);
+  background: hsla(203, 89%, 53%, 0.1);
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin: 8px 0;
+}
+.twitter-avatar {
+  border-radius: 3px;
+  margin: 8px 8px 4px 0;
+  float: left;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+.twitter-image {
+  text-align: center;
+  margin: 8px auto;
+}
+
+code {
+  font-size: .857rem;
+  white-space: pre-wrap;
+  padding: 0 4px;
+}
+pre {
+  padding: 8px;
+  margin: 8px 0;
+  font-size: 0.75rem;
+  white-space: pre;
+  overflow-x: auto;
+  word-wrap: normal;
+}
+code, pre {
+  border-radius: 3px;
+  border: 1px solid hsla(0, 0%, 50%, 0.25);
+  background-color: hsla(0, 0%, 50%, 0.125);
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+pre code {
+  /* Starting with Zulip Server 3.0, code blocks have \`pre > code\`.
+     Undo the stuff we have for \`code\` that isn't meant to apply there.
+     TODO(server-3.0): Simplify this. */
+  font-size: inherit;
+  white-space: inherit;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.highlight {
+  background-color: hsl(51, 94%, 74%);
+}
+
+/* \`a\`, which the webapp styles with Bootstrap. */
+a {
+  color: hsl(200, 100%, 40%);
+}
+
+/* \`hr\`, not found in the webapp's rendered_markdown.css. */
+hr {
+  margin: 16px 0;
+  border: 0;
+  border-top: 1px solid hsla(0, 0%, 50%, 0.5);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: 600;
+  /* line-height doesn't seem to be needed on mobile, but it's here just for
+   * the sake of being consistent with the webapp */
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 5px;
+  text-decoration: underline;
+}
+
+/* Our own "sorry, unsupported" message for widgets.
+   Also used for showing that a message was sent by a muted user. */
+.special-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: hsla(0, 0%, 50%, 0.1);
+  border: 1px dashed hsla(0, 0%, 50%, 0.5);
+  border-radius: 0.5rem;
+}
+
+/* LaTeX styling */
+.katex-display {
+   /* KaTeX sometimes overdraws its bounding box by a little, so we
+      enlarge its scrolling area by stealing 3px from the margin
+      of the enclosing <p>. */
+  margin: -3px 0;
+  padding: 3px 0;
+  overflow: auto hidden;
+}
+
+/* Taken from the \`.spoiler-block\` section of the webapp's styles, as
+   of zulip/zulip@1cb040647, translated from SCSS to plain CSS. */
+.spoiler-block {
+  border: hsl(0, 0%, 50%) 1px solid;
+  padding: 2px 8px 2px 10px;
+  border-radius: 10px;
+  position: relative;
+  top: 1px;
+  display: block;
+  margin: 5px 0 15px 0;
+}
+.spoiler-block .spoiler-header {
+  padding: 5px;
+  font-weight: bold;
+}
+.spoiler-block .spoiler-content {
+  overflow: hidden;
+  border-top: hsla(0, 0%, 50%,1) 0px solid;
+  transition: height 0.4s ease-in-out, border-top 0.4s step-end, padding 0.4s step-end;
+  padding: 0px;
+  height: 0px;
+}
+.spoiler-block .spoiler-content.spoiler-content-open {
+  border-top: hsla(0, 0%, 50%,1) 1px solid;
+  transition: height 0.4s ease-in-out, border-top 0.4s step-start, padding 0.4s step-start;
+  padding: 5px;
+  height: auto;
+}
+.spoiler-block .spoiler-button {
+  float: right;
+  width: 25px;
+  height: 25px;
+}
+.spoiler-block .spoiler-button:hover .spoiler-arrow::before, .spoiler-block .spoiler-button:hover .spoiler-arrow::after {
+  background-color: hsl(0, 0%, 50%);
+}
+.spoiler-block .spoiler-arrow {
+  float: right;
+  width: 13px;
+  height: 13px;
+  position: relative;
+  bottom: -5px;
+  left: -10px;
+  cursor: pointer;
+  transition: 0.4s ease;
+  margin-top: 2px;
+  text-align: left;
+  transform: rotate(45deg);
+}
+.spoiler-block .spoiler-arrow::before, .spoiler-block .spoiler-arrow::after {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 3px;
+  background-color: hsl(0, 0%, 83%);
+  transition: 0.4s ease;
+}
+.spoiler-block .spoiler-arrow::after {
+  position: absolute;
+  transform: rotate(90deg);
+  top: -5px;
+  left: 5px;
+}
+.spoiler-block .spoiler-arrow.spoiler-button-open {
+  transform: rotate(45deg) translate(-5px, -5px);
+}
+.spoiler-block .spoiler-arrow.spoiler-button-open::before {
+  transform: translate(10px, 0);
+}
+.spoiler-block .spoiler-arrow.spoiler-button-open::after {
+  transform: rotate(90deg) translate(10px, 0);
+}
+
+/* Poll styling */
+
+.poll-widget {
+  border: hsl(0, 0%, 50%) 1px solid;
+  padding: 2px 8px 2px 10px;
+  border-radius: 10px;
+}
+
+.poll-question {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  border-bottom: 1px solid hsla(0, 0%, 60%, 0.2);
+}
+
+.poll-widget > ul {
+  padding: 0px;
+}
+
+.poll-widget > ul > li {
+  list-style: none;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.poll-vote {
+  background-color: hsla(0, 0%, 0%, 0);
+  border: 1.5px solid hsl(0, 0%, 50%);
+  border-radius: 8px;
+  height: 36px;
+  min-width: 36px;
+  padding: 1px 8px;
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.poll-vote[data-voted="true"] {
+  border: 1.5px solid hsl(222, 99%, 69%);
+  background-color: hsla(222, 99%, 69%, 25%);
+}
+
+.poll-option {
+  margin-left: 8px;
+  width: 100%;
+}
+
+`;

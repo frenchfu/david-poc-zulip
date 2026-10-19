@@ -4,6 +4,7 @@ import type { ThemeName } from '../../types';
 import cssPygments from './cssPygments';
 import cssEmojis from './cssEmojis';
 import cssNight from './cssNight';
+import cssBase from './cssBase';
 import type { ServerEmojiData } from '../../api/modelTypes';
 
 /**
@@ -26,6 +27,9 @@ const katexFraclineHackStyle = `<style id="katex-frac-line-hack">
 export default (theme: ThemeName, serverEmojiData: ServerEmojiData | null): string => `
 <link rel='stylesheet' type='text/css' href='./base.css'>
 <link rel='stylesheet' type='text/css' href='./katex/katex.min.css'>
+<style id="style-base">
+${cssBase}
+</style>
 <style>
 ${theme === 'dark' ? cssNight : ''}
 ${cssPygments(theme === 'dark')}
